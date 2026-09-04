@@ -30,6 +30,9 @@
     // 2. Populate the "Select Plot" dropdown
     populateDropdown(nameSelect);
 
+    // Finsweet CMS Load All can append items after this script first runs.
+    watchCMSData(nameSelect);
+
     // 3. Change price input to text to allow visual formatting (symbols/commas)
     priceInput.type = 'text';
     if (sharePriceInput) sharePriceInput.type = 'text';
@@ -98,6 +101,37 @@
       opt.value = name;
       opt.textContent = name;
       selectEl.appendChild(opt);
+    });
+  };
+
+  const watchCMSData = (selectEl) => {
+    let refreshScheduled = false;
+
+    const refresh = () => {
+      if (refreshScheduled) return;
+      refreshScheduled = true;
+
+      requestAnimationFrame(() => {
+        refreshScheduled = false;
+        const selectedName = selectEl.value;
+        parseCMSData();
+        populateDropdown(selectEl);
+        selectEl.value = selectedName;
+      });
+    };
+
+    const includesCMSData = (node) => node.nodeType === Node.ELEMENT_NODE && (
+      node.matches(SELECTORS.dataEmbeds) ||
+      node.querySelector(SELECTORS.dataEmbeds)
+    );
+
+    new MutationObserver((mutations) => {
+      if (mutations.some(mutation => Array.from(mutation.addedNodes).some(includesCMSData))) {
+        refresh();
+      }
+    }).observe(document.body, {
+      childList: true,
+      subtree: true
     });
   };
 
