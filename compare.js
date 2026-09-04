@@ -106,6 +106,27 @@ document.addEventListener("DOMContentLoaded", () => {
 })();
 
 //--- Toggle Floorplans
+document.addEventListener("DOMContentLoaded", function () {
+  const enableFloorplans = (scope = document) => {
+    scope.querySelectorAll?.(".compare_floorplan-overlay")
+      .forEach(el => el.classList.add("is-on"));
+  };
+
+  document.querySelectorAll('[toggle="floorplan"], [toggle="floorplan"] .toggle-switch')
+    .forEach(el => el.classList.add("is-on"));
+  enableFloorplans();
+
+  new MutationObserver(records => {
+    if (!document.querySelector('[toggle="floorplan"].is-on')) return;
+
+    records.forEach(record => record.addedNodes.forEach(node => {
+      if (!(node instanceof Element)) return;
+      if (node.matches(".compare_floorplan-overlay")) node.classList.add("is-on");
+      enableFloorplans(node);
+    }));
+  }).observe(document.body, { childList: true, subtree: true });
+});
+
 document.addEventListener("click", function (e) {
   const toggleBtn = e.target.closest('[toggle="floorplan"]');
   if (!toggleBtn) return;
