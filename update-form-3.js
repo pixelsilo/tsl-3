@@ -5,6 +5,7 @@
     availabilitySelect: '#availability',
     priceInput: '#price',
     sharePriceInput: '#share-price',
+    sharePercentageInput: '#share-percentage',
     rentInput: '#rent',
     serviceChargeInput: '#service-charge',
     statusSelect: '#status',
@@ -19,6 +20,7 @@
     const nameSelect = document.querySelector(SELECTORS.nameSelect);
     const priceInput = document.querySelector(SELECTORS.priceInput);
     const sharePriceInput = document.querySelector(SELECTORS.sharePriceInput);
+    const sharePercentageInput = document.querySelector(SELECTORS.sharePercentageInput);
     const rentInput = document.querySelector(SELECTORS.rentInput);
     const serviceChargeInput = document.querySelector(SELECTORS.serviceChargeInput);
 
@@ -139,6 +141,7 @@
     const availabilitySelect = document.querySelector(SELECTORS.availabilitySelect);
     const priceInput = document.querySelector(SELECTORS.priceInput);
     const sharePriceInput = document.querySelector(SELECTORS.sharePriceInput);
+    const sharePercentageInput = document.querySelector(SELECTORS.sharePercentageInput);
     const rentInput = document.querySelector(SELECTORS.rentInput);
     const serviceChargeInput = document.querySelector(SELECTORS.serviceChargeInput);
     const statusSelect = document.querySelector(SELECTORS.statusSelect);
@@ -150,6 +153,7 @@
       if (availabilitySelect) availabilitySelect.value = data.availability || "";
       if (priceInput) priceInput.value = formatCurrency(data.price);
       if (sharePriceInput) sharePriceInput.value = formatCurrency(data["share-price"]);
+      if (sharePercentageInput) sharePercentageInput.value = data["share-percentage"] ?? "";
       if (rentInput) rentInput.value = formatCurrency(data.rent);
       if (serviceChargeInput) serviceChargeInput.value = formatCurrency(data["service-charge"]);
       if (statusSelect) statusSelect.value = data.status || statusSelect.options[0]?.value || "";
@@ -158,6 +162,7 @@
       if (availabilitySelect) availabilitySelect.value = "";
       if (priceInput) priceInput.value = "";
       if (sharePriceInput) sharePriceInput.value = "";
+      if (sharePercentageInput) sharePercentageInput.value = "";
       if (rentInput) rentInput.value = "";
       if (serviceChargeInput) serviceChargeInput.value = "";
       if (statusSelect) statusSelect.selectedIndex = 0;
